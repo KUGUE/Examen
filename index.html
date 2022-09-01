@@ -54,7 +54,7 @@
             let isPress = false;
             let x = 240;
             let y = 230;
-            let  speed=10;
+            let  speed=30;
             let fondo = new Image();
             let alien = new Image();
             let pared = new Image();
@@ -63,7 +63,7 @@
             let ganaste = new Audio();
             function start() {   
             //SONIDO 
-            ambiente.src='img/Fondo.jpg';
+            fondo.src='img/fondo.jpg';
             ambiente.src='ambiente.mp3';
             ganaste.src='ganaste.mp3';
            
@@ -324,7 +324,9 @@ paint();
 const paint = () => {
     window.requestAnimationFrame(paint);
  //ELEMENTOS GRAFICOS 
+
           context.fillRect(0, 0, 1200, 600);
+             context.drawImage(fondo,0,0, 1200, 600);
           img.onload = function(){
            context.drawImage(fondo,0,0,1280,600);
        }
@@ -334,6 +336,7 @@ const paint = () => {
           context.drawImage(nave,0,480,30,30);
         //PAREDES
         aux=60
+
         for(let i = 0;i < 17;i++){ 
              context.drawImage(pared,aux,150, 30, 30);
             aux=aux+30;
@@ -584,7 +587,7 @@ const paint = () => {
         context.fillText("PAUSA: ", 140, 330);
         context.fillText("ESPACIO", 310, 330);
         context.fillText("REINICIAR: ", 140, 360);
-        context.fillText("H", 310, 360);
+        context.fillText("H", 310, 360); 
         context.fillText("PONER MUSICA: ",140, 420);
         context.fillText("P", 400, 420);
         context.fillStyle = "#000000";
@@ -667,8 +670,7 @@ class Cuadrado {
             }
 };
             } 
-document.addEventListener('keydown', ({
-
+document.addEventListener('keydown',({
     keyCode
 }) => {
      ambiente.play();
