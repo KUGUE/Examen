@@ -120,11 +120,14 @@
             var pared = new Image();
             var nave = new Image();
             var ambiente = new Audio();
+            var ganaste = new Audio();
 
             function start() {   
             //SONIDO 
 
             ambiente.src='ambiente.mp3';
+
+            ganaste.src='ganaste.mp3';
             ambiente.play();
 
              //LLENAR PAREDES
@@ -211,7 +214,7 @@
                 alien.src='img/alien.png';
                 pared.src='img/pared.jpg';
                 nave.src='img/win.png';
-                fondo.src='img/fondo.png';
+               // fondo.src='img/fondo.jpg';
               
 
                 //JUGADOR
@@ -492,7 +495,7 @@ aux=810
           //ELEMENTOS GRAFICOS 
           context.fillRect(0, 0, 1280, 600);
           context.fillStyle = "#000";
-          context.drawImage(fondo,0,0,1200,520);
+         // context.drawImage(fondo,0,0,1200,520);
           context.drawImage(alien,player1.x,player1.y,30,30);
           //WIN
           context.drawImage(nave,0,30,30,30);
@@ -780,6 +783,10 @@ aux=810
             context.fillText("ESPACIO", 310, 330);
             context.fillText("REINICIAR: ", 140, 360);
             context.fillText("H", 310, 360);
+            context.fillText("MUTEAR MUSICA: ",140, 390);
+            context.fillText("M", 400, 390);
+            context.fillText("PONER MUSICA: ",140, 420);
+            context.fillText("P", 400, 420);
         }
     }
          
@@ -809,6 +816,10 @@ aux=810
             context.fillStyle = "#fff";
             context.font = "30px Arial";
             context.fillText("G A N A S T E", 550, 120);
+             context.fillText("REINICIAR: ", 140, 360);
+            context.fillText("H", 310, 360);
+            ganaste.play();
+            ambiente.pause();
             context.fillText("TIEMPO = " + min + " min " + seg + "segs", 260, 330);
         }
     }
@@ -879,6 +890,13 @@ document.addEventListener('keydown', ({
                  // Reiniciar
                 if (keyCode == 72) {
                     location.reload();
+                }
+                   //Mutear musica
+                if (keyCode == 109|| keyCode == 77) {
+                   ambiente.pause();                }
+                 //Poner Musica
+                if (keyCode == 112|| keyCode == 80) {
+                   ambiente.play();
                 }
 
             })
