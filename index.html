@@ -28,12 +28,15 @@
             let canvas = null;
             let context = null;
             let player1 = null;
+            let win = null;
             let pause = false;
             let color = 'red';
             let obstaculosN = [null];
             let obstaculosS =[null];
             let obstaculosE =[null];
             let obstaculosO =[null];
+            let wins1=[null];
+            let wins2=[null];
             let p1=[null];
             let p2=[null];
             let p3=[null];
@@ -101,7 +104,9 @@
             let p65=[null];
             let p66=[null];
             let p67=[null];
+            let p68=[null];
             let N=40;
+            let direction= "left";
             let aux=0;
             let aux2=0;
             let aux3=0;
@@ -113,6 +118,7 @@
             var fondo = new Image();
             var alien = new Image();
             var pared = new Image();
+            var nave = new Image();
             var ambiente = new Audio();
 
             function start() {   
@@ -194,8 +200,9 @@
                 p65.push(i);
                 p66.push(i);
                 p67.push(i);
-
-
+                p68.push(i);
+                wins1.push(i);
+                wins2.push(i);
 
             }
             canvas = document.getElementById('canvas');
@@ -203,6 +210,7 @@
                 //ELEMENTOS GRAFICOS    
                 alien.src='img/alien.png';
                 pared.src='img/pared.jpg';
+                nave.src='img/win.png';
                 fondo.src='img/fondo.png';
               
 
@@ -462,9 +470,20 @@ aux=810
 
          aux4=390
        for(let i = 0;i <13;i++){ 
-         p67[i] = new Cuadrado(aux4,360, 30, 30, 'gray');
+         p67[i] = new Cuadrado(aux4,360, 30, 30);
            aux4=aux4+30;
        }
+        aux=60
+       for(let i = 0;i < 14;i++){ 
+          p68[i] = new Cuadrado(1110,aux, 30, 30);
+           aux=aux+30;
+       }
+
+ for(let i = 0;i < 1;i++){ 
+         wins1[i] = new Cuadrado(0,30, 30, 30);
+         wins2[i] = new Cuadrado(0,480, 30, 30);
+        }
+
 
         paint();
     }
@@ -476,8 +495,8 @@ aux=810
           context.drawImage(fondo,0,0,1200,520);
           context.drawImage(alien,player1.x,player1.y,30,30);
           //WIN
-          context.drawImage(alien,0,30,30,30);
-          context.drawImage(alien,0,480,30,30);
+          context.drawImage(nave,0,30,30,30);
+          context.drawImage(nave,0,480,30,30);
             //PAREDES
 
 
@@ -681,7 +700,6 @@ aux=810
         context.drawImage(pared,aux,450, 30, 30,);
         aux=aux+30;
     }
-
         aux=120
        for(let i = 0;i < 2;i++){ 
         context.drawImage(pared,aux,390, 30, 30,);
@@ -712,15 +730,15 @@ aux=810
          context.drawImage(pared,aux,300, 30, 30,);
         aux=aux+30;
     }
-    //AQUI
-     //bloques solos
+
+
      for(let i = 0;i < 1;i++){ 
         context.drawImage(pared,810,180, 30, 30,);
         context.drawImage(pared,240,270, 30, 30,);
         context.drawImage(pared,300,480, 30, 30,);
         context.drawImage(pared,300,480, 30, 30,);
      }
-            //PAREDEEEEEEEEEEEEEEEEEEES
+       
             //DERECHA
             aux=0
             for(let i = 0;i < N;i++){ 
@@ -746,12 +764,10 @@ aux=810
               aux4=aux4+30;
           }
 
-
  //MENU PAUSA Y CONTROLES
           if (!pause) {
             update();
         } else {
-
             context.fillStyle = "rgba(0,0,0,0.5)";
             context.fillRect(0, 0, 1280, 620);
             context.fillStyle = "#fff";
@@ -759,13 +775,14 @@ aux=810
             context.fillText("P A U S A", 550, 120);
             context.fillText("C O N T R O L E S", 150, 250);
             context.fillText("MOVE: ", 140, 300);
-            context.fillText("W A S D", 260, 300);
+            context.fillText("W A S D", 310, 300);
             context.fillText("PAUSA: ", 140, 330);
-            context.fillText("ESPACIO", 260, 330);
-            context.fillText("YOUR TIME WAS = " + min + " min " + seg + "segs", 260, 330);
+            context.fillText("ESPACIO", 310, 330);
+            context.fillText("REINICIAR: ", 140, 360);
+            context.fillText("H", 310, 360);
         }
     }
-
+         
     document.addEventListener('keyup', (event) => {
       var keyValue = event.key;
       var codeValue = event.code;
@@ -785,8 +802,18 @@ aux=810
 });
 
     const update = () => {
+         for(let i = 0;i < N;i++){ 
+    if (player1.se_tocan(wins1[i])|| player1.se_tocan(wins2[i])) {
+            context.fillStyle = "rgba(0,0,0,0.5)";
+            context.fillRect(0, 0, 1280, 620);
+            context.fillStyle = "#fff";
+            context.font = "30px Arial";
+            context.fillText("G A N A S T E", 550, 120);
+            context.fillText("TIEMPO = " + min + " min " + seg + "segs", 260, 330);
+        }
+    }
       for(let i = 0;i < N;i++){ 
-        if (player1.se_tocan(obstaculosN[i])||player1.se_tocan(obstaculosE[i])||player1.se_tocan(obstaculosS[i])||player1.se_tocan(obstaculosO[i])||player1.se_tocan(p1[i])||player1.se_tocan(p2[i])||player1.se_tocan(p3[i])||player1.se_tocan(p4[i])||player1.se_tocan(p5[i])||player1.se_tocan(p6[i])||player1.se_tocan(p7[i])||player1.se_tocan(p8[i])||player1.se_tocan(p9[i])||player1.se_tocan(p10[i])||player1.se_tocan(p11[i])||player1.se_tocan(p12[i])||player1.se_tocan(p13[i])||player1.se_tocan(p14[i])||player1.se_tocan(p15[i])||player1.se_tocan(p16[i])||player1.se_tocan(p17[i])||player1.se_tocan(p18[i])||player1.se_tocan(p19[i])||player1.se_tocan(p20[i])||player1.se_tocan(p21[i])||player1.se_tocan(p22[i])||player1.se_tocan(p23[i])||player1.se_tocan(p24[i])||player1.se_tocan(p25[i])||player1.se_tocan(p26[i])||player1.se_tocan(p27[i])||player1.se_tocan(p28[i])||player1.se_tocan(p29[i])||player1.se_tocan(p30[i])||player1.se_tocan(p31[i])||player1.se_tocan(p32[i])||player1.se_tocan(p33[i])||player1.se_tocan(p34[i])||player1.se_tocan(p35[i])||player1.se_tocan(p36[i])||player1.se_tocan(p37[i])||player1.se_tocan(p38[i])||player1.se_tocan(p39[i])||player1.se_tocan(p40[i])||player1.se_tocan(p41[i])||player1.se_tocan(p42[i])||player1.se_tocan(p43[i])||player1.se_tocan(p44[i])||player1.se_tocan(p45[i])||player1.se_tocan(p46[i])||player1.se_tocan(p47[i])||player1.se_tocan(p48[i])||player1.se_tocan(p49[i])||player1.se_tocan(p50[i])||player1.se_tocan(p51[i])||player1.se_tocan(p52[i])||player1.se_tocan(p53[i])||player1.se_tocan(p54[i])||player1.se_tocan(p55[i])||player1.se_tocan(p56[i])||player1.se_tocan(p57[i])||player1.se_tocan(p58[i])||player1.se_tocan(p59[i])||player1.se_tocan(p60[i])||player1.se_tocan(p61[i])||player1.se_tocan(p62[i])||player1.se_tocan(p63[i])||player1.se_tocan(p64[i])||player1.se_tocan(p65[i])||player1.se_tocan(p66[i])||player1.se_tocan(p67[i])){
+        if (player1.se_tocan(obstaculosN[i])||player1.se_tocan(obstaculosE[i])||player1.se_tocan(obstaculosS[i])||player1.se_tocan(obstaculosO[i])||player1.se_tocan(p1[i])||player1.se_tocan(p2[i])||player1.se_tocan(p3[i])||player1.se_tocan(p4[i])||player1.se_tocan(p5[i])||player1.se_tocan(p6[i])||player1.se_tocan(p7[i])||player1.se_tocan(p8[i])||player1.se_tocan(p9[i])||player1.se_tocan(p10[i])||player1.se_tocan(p11[i])||player1.se_tocan(p12[i])||player1.se_tocan(p13[i])||player1.se_tocan(p14[i])||player1.se_tocan(p15[i])||player1.se_tocan(p16[i])||player1.se_tocan(p17[i])||player1.se_tocan(p18[i])||player1.se_tocan(p19[i])||player1.se_tocan(p20[i])||player1.se_tocan(p21[i])||player1.se_tocan(p22[i])||player1.se_tocan(p23[i])||player1.se_tocan(p24[i])||player1.se_tocan(p25[i])||player1.se_tocan(p26[i])||player1.se_tocan(p27[i])||player1.se_tocan(p28[i])||player1.se_tocan(p29[i])||player1.se_tocan(p30[i])||player1.se_tocan(p31[i])||player1.se_tocan(p32[i])||player1.se_tocan(p33[i])||player1.se_tocan(p34[i])||player1.se_tocan(p35[i])||player1.se_tocan(p36[i])||player1.se_tocan(p37[i])||player1.se_tocan(p38[i])||player1.se_tocan(p39[i])||player1.se_tocan(p40[i])||player1.se_tocan(p41[i])||player1.se_tocan(p42[i])||player1.se_tocan(p43[i])||player1.se_tocan(p44[i])||player1.se_tocan(p45[i])||player1.se_tocan(p46[i])||player1.se_tocan(p47[i])||player1.se_tocan(p48[i])||player1.se_tocan(p49[i])||player1.se_tocan(p50[i])||player1.se_tocan(p51[i])||player1.se_tocan(p52[i])||player1.se_tocan(p53[i])||player1.se_tocan(p54[i])||player1.se_tocan(p55[i])||player1.se_tocan(p56[i])||player1.se_tocan(p57[i])||player1.se_tocan(p58[i])||player1.se_tocan(p59[i])||player1.se_tocan(p60[i])||player1.se_tocan(p61[i])||player1.se_tocan(p62[i])||player1.se_tocan(p63[i])||player1.se_tocan(p64[i])||player1.se_tocan(p65[i])||player1.se_tocan(p66[i])||player1.se_tocan(p67[i])||player1.se_tocan(p68[i])){
             if (direction === 'down') {
                 player1.y -=speed;
             }
@@ -824,18 +851,7 @@ class Cuadrado {
             return true;
     }
 };
- reloj=function() {
-            cronometro = setInterval(function() {
-                if (seg == 60) {
-                    seg = 0;
-                    min += 1;
-                    if (min == 60) {
-                        min = 0;
-                    }
-                }
-                seg++;
-            }, 1000);
-        }
+
 } 
 document.addEventListener('keydown', ({
     keyCode
@@ -860,6 +876,11 @@ document.addEventListener('keydown', ({
                 if (keyCode == 32) {
                     pause = (pause) ? false : true;
                 }
+                 // Reiniciar
+                if (keyCode == 72) {
+                    location.reload();
+                }
+
             })
 
   
@@ -873,6 +894,19 @@ window.requestAnimationFrame = (function() {
         window.setTimeout(callback, 17);
     };
 }());
+
+function relog() {
+            cronometro = setInterval(function() {
+                if (seg == 60) {
+                    seg = 0;
+                    min += 1;
+                    if (min == 60) {
+                        min = 0;
+                    }
+                }
+                seg++;
+            }, 1000);
+        }
 </script>
 </body>
 </html> 
