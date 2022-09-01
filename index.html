@@ -576,6 +576,7 @@ const paint = () => {
         context.fillRect(0, 0, 1200, 620);
         context.fillStyle="#fff";
         context.font = "30px Arial";
+          direction=null;
         context.fillText("P A U S A", 550, 120);
         context.fillText("C O N T R O L E S", 150, 250);
         context.fillText("MOVERSE: ", 140, 300);
@@ -584,8 +585,6 @@ const paint = () => {
         context.fillText("ESPACIO", 310, 330);
         context.fillText("REINICIAR: ", 140, 360);
         context.fillText("H", 310, 360);
-        context.fillText("MUTEAR MUSICA: ",140, 390);
-        context.fillText("M", 400, 390);
         context.fillText("PONER MUSICA: ",140, 420);
         context.fillText("P", 400, 420);
         context.fillStyle = "#000000";
@@ -697,9 +696,6 @@ document.addEventListener('keydown', ({
                  if (keyCode == 72) {
                     location.reload();
                 }
-                   //Mutear musica
-                   if (keyCode == 109|| keyCode == 77) {
-                    ambiente.pause();                }
                  //Poner Musica
                  if (keyCode == 112|| keyCode == 80) {
                     ambiente.play();
